@@ -38,7 +38,27 @@ public class ProductDatabase {
     // TODO: method getByPriceRange, given 2 prices (minPrice, maxPrice) returns a list
     // of products that are in that price range (included)
 
+    public List<Product> getByPriceRange(double min, double max) {
+
+        List<Product> result = new ArrayList<>();
+
+        for (Product product : productMap.values()) {
+            if (product.getPrice() >= min && product.getPrice() <= max ) {
+                result.add(product);
+            }
+        }
+        return result;
+    }
+
     // TODO: method remove, given an id, removes that product from the database
+
+    public void remove(long id) {
+
+        for (Product product : productMap.keySet()) {
+            if (product.getId() = id)
+                productMap.remove(product);
+        }
+    }
 
     public List<Product> getByBrand(String brand) {
 
@@ -52,7 +72,6 @@ public class ProductDatabase {
 
         return result;
     }
-
 
     public int getCountByBrand(String brand) {
 

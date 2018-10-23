@@ -31,12 +31,23 @@ public class Example {
         int countApple = productDatabase.getCountByBrand("Apple");
         System.out.println("I have " + countApple + " Apple products");
 
-
         List<Product> productsByApple = productDatabase.getByBrand("Apple");
         System.out.println("Products by Apple: " + productsByApple);
         for (Product p : productsByApple) {
             System.out.println(p.getName() + ", " + p.getBrand() + ", " + p.getPrice());
         }
+
+        List<Product> under1000 = productDatabase.getByPriceRange(500, 1000);
+        System.out.println("Products under 1000: " + under1000);
+        for (Product p : under1000) {
+            System.out.println(p.getName() + ", " + p.getBrand() + ", " + p.getPrice());
+        }
+
+        System.out.println("I will remove the iPhone XS");
+        System.out.println(productDatabase.remove(2));
+        Product product1 = productDatabase.get(2);
+        System.out.println("The name of the product is: " + product1.getName());
+
 
 
         List<CartItem> items = Arrays.asList(
