@@ -45,10 +45,6 @@ public class Example {
 
         System.out.println("I will remove the iPhone XS");
         System.out.println(productDatabase.remove(2));
-        Product product1 = productDatabase.get(2);
-        System.out.println("The name of the product is: " + product1.getName());
-
-
 
         List<CartItem> items = Arrays.asList(
                 new CartItem(p1, 2),

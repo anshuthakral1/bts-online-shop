@@ -52,13 +52,13 @@ public class ProductDatabase {
 
     // TODO: method remove, given an id, removes that product from the database
 
-    public void remove(long id) {
+    public Map<Long, Product> remove(long id) {
 
-        for (Product product : productMap.keySet()) {
-            if (product.getId() = id)
-                productMap.remove(product);
-        }
+        Map<Long, Product> result = this.productMap;
+        result.remove(id);
+        return result;
     }
+
 
     public List<Product> getByBrand(String brand) {
 
