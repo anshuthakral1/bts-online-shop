@@ -45,6 +45,17 @@ public class Example {
 
         System.out.println("I will remove the iPhone XS");
         System.out.println(productDatabase.remove(2));
+        // productDatabase.remove(2);
+        System.out.println(productDatabase.getAll());
+
+        long requestedId = 2;
+        Product requestedProduct = productDatabase.get(requestedId);
+
+        if (requestedProduct != null) {
+            System.out.println(requestedProduct);
+        } else {
+            System.out.println("This product doesn't exist");
+        }
 
         List<CartItem> items = Arrays.asList(
                 new CartItem(p1, 2),
