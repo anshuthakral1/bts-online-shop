@@ -15,11 +15,12 @@ public class ProductDatabase {
         this.productMap = new HashMap<>();
     }
 
-    public void add(Product product) {
+    public long add(Product product) {
 
         product.setId(this.nextId);
         productMap.put(product.getId(), product);
         this.nextId++;
+        return product.getId();
     }
 
     public Product get(long id) {
