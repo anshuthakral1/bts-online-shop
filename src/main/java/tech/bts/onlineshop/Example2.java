@@ -2,6 +2,7 @@ package tech.bts.onlineshop;
 
 import tech.bts.onlineshop.business.ProductService;
 import tech.bts.onlineshop.data.ProductDatabase;
+import tech.bts.onlineshop.model.CartItem;
 import tech.bts.onlineshop.model.Product;
 
 public class Example2 {
@@ -18,15 +19,19 @@ public class Example2 {
         ps1.addProductStock(iphoneID, 350);
         ps1.addProductStock(macBookId,100);
 
-        long requestedId = macBookId;
+        long requestedId = iphoneID;
         Product requestedProduct = ps1.getById(requestedId);
         System.out.println("There are " + requestedProduct.getQuantity() + " units of " + requestedProduct.getName() + " in stock");
 
-        int requestedQuantity = 220;
+        int requestedQuantity = 120;
         boolean availability = ps1.checkAvailability(requestedId,requestedQuantity);
         System.out.println(availability);
 
         System.out.println(ps1.possibleDelivery(requestedId,requestedQuantity));
+
+        CartItem cart = new CartItem(requestedId, requestedQuantity);
+        CartItem cart1 = ps1.deliverableCart(cart);
+        System.out.println("Cart includes " + cart1.getQuantity() + " units of " + requestedProduct.getName());
 
     }
 }

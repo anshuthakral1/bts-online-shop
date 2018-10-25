@@ -8,6 +8,7 @@ import tech.bts.onlineshop.model.ShoppingCart;
 public class ProductService {
 
     private ProductDatabase productDatabase;
+    private CartItem cart;
 
     public ProductService(ProductDatabase productDatabase) {
         this.productDatabase = productDatabase;
@@ -32,11 +33,7 @@ public class ProductService {
     public boolean checkAvailability(long productId, int quantity) {
 
         Product product = this.productDatabase.get(productId);
-        if (quantity <= product.getQuantity()) {
-            return true;
-        } else {
-         return false;
-        }
+        return (quantity <= product.getQuantity());
     }
 
     public int possibleDelivery(long productId, int quantity) {
@@ -49,4 +46,8 @@ public class ProductService {
         }
     }
 
+    public CartItem deliverableCart(CartItem cart) {
+        this.cart = cart;
+        return new CartItem(this.cart.getProductId(), possibleDelivery(this.cart.getProductId(), this.cart.getQuantity()));
+    }
 }
