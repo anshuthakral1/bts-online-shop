@@ -9,7 +9,6 @@ public class Example2 {
     public static void main(String[] args) {
 
         ProductDatabase productDatabase = new ProductDatabase();
-
         ProductService ps1 = new ProductService(productDatabase);
 
         long macBookId = ps1.createProduct(new Product("MacBook", "Apple", 1500));
@@ -20,10 +19,16 @@ public class Example2 {
         ps1.addProductStock(macBookId,100);
 
         long requestedId = macBookId;
-        System.out.println("There are " + ps1.getById(requestedId).getQuantity() + " units of " + ps1.getById(requestedId).getName() + " in stock");
+        Product requestedProduct = ps1.getById(requestedId);
+        System.out.println("There are " + requestedProduct.getQuantity() + " units of " + requestedProduct.getName() + " in stock");
+
+        int requestedQuantity = 220;
+        boolean availability = ps1.checkAvailability(requestedId,requestedQuantity);
+        System.out.println(availability);
+
+        System.out.println(ps1.possibleDelivery(requestedId,requestedQuantity));
+
     }
 }
-
-
 
 

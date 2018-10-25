@@ -28,4 +28,25 @@ public class ProductService {
         Product product = this.productDatabase.get(productId);
         return product;
     }
+
+    public boolean checkAvailability(long productId, int quantity) {
+
+        Product product = this.productDatabase.get(productId);
+        if (quantity <= product.getQuantity()) {
+            return true;
+        } else {
+         return false;
+        }
+    }
+
+    public int possibleDelivery(long productId, int quantity) {
+
+        Product product = this.productDatabase.get(productId);
+        if (quantity <= product.getQuantity()) {
+            return quantity;
+        } else {
+            return product.getQuantity();
+        }
+    }
+
 }
