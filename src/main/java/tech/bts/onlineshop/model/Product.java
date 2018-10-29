@@ -55,15 +55,15 @@ public class Product {
         this.price = price;
     }
 
-    public int getQuantity() {
-        return quantity;
-    }
-
     public boolean isAvailable() {
         return this.quantity > 0;
     }
 
-    public void setQuantity ( int quantity){
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
 }

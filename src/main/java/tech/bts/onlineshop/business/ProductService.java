@@ -8,46 +8,54 @@ import tech.bts.onlineshop.model.ShoppingCart;
 public class ProductService {
 
     private ProductDatabase productDatabase;
-    private CartItem cart;
+
 
     public ProductService(ProductDatabase productDatabase) {
         this.productDatabase = productDatabase;
     }
 
+
+    /** Adds a product and returns the id for that product */
     public long createProduct(Product product) {
         return this.productDatabase.add(product);
     }
 
+    public int getCount() {
+        return productDatabase.getCount();
+    }
+
+    public Product getProductById(long productId) {
+        return productDatabase.get(productId);
+    }
+
     public void addProductStock(long productId, int quantity) {
+
         Product product = this.productDatabase.get(productId);
         int total = product.getQuantity() + quantity;
         product.setQuantity(total);
     }
 
-    public Product getById(long productId) {
+    /** Returns true if the given quantity is available for that product */
+    public boolean checkProductAvailability(long productId, int quantity) {
 
-        Product product = this.productDatabase.get(productId);
-        return product;
+        Product product = productDatabase.get(productId);
+        return product.getQuantity() >= quantity;
     }
 
-    public boolean checkAvailability(long productId, int quantity) {
+    /** Returns the quantity that is possible to deliver for that product */
+    public int getAvailableQuantity(long productId, int quantity) {
 
-        Product product = this.productDatabase.get(productId);
-        return (quantity <= product.getQuantity());
+        Product product = productDatabase.get(productId);
+        return Math.min(product.getQuantity(), quantity);
     }
 
-    public int possibleDelivery(long productId, int quantity) {
+    /** Reduces the quantities of the products by the quantities in the cart */
+    public void purchase(ShoppingCart cart) {
 
-        Product product = this.productDatabase.get(productId);
-        if (quantity <= product.getQuantity()) {
-            return quantity;
-        } else {
-            return product.getQuantity();
+        for (CartItem item : cart.getItems()) {
+            Product product = productDatabase.get(item.getProductId());
+            int remainingQuantity = product.getQuantity() - item.getQuantity();
+            product.setQuantity(remainingQuantity);
         }
-    }
-
-    public CartItem deliverableCart(CartItem cart) {
-        this.cart = cart;
-        return new CartItem(this.cart.getProductId(), possibleDelivery(this.cart.getProductId(), this.cart.getQuantity()));
     }
 }
