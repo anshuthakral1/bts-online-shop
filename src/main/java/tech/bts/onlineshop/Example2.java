@@ -1,8 +1,10 @@
 package tech.bts.onlineshop;
 
+import tech.bts.onlineshop.business.DiscountService;
 import tech.bts.onlineshop.business.ProductService;
 import tech.bts.onlineshop.data.ProductDatabase;
 import tech.bts.onlineshop.model.CartItem;
+import tech.bts.onlineshop.model.Discount;
 import tech.bts.onlineshop.model.Product;
 import tech.bts.onlineshop.model.ShoppingCart;
 
@@ -38,5 +40,16 @@ public class Example2 {
 
         Product xiaomi = productService.getProductById(xiaomiId);
         System.out.println("Expected 0 ---> " + xiaomi.getQuantity());
+
+        Discount discount1 = new Discount("SUMMERSALES","Summer Sales",25, true);
+        Discount discount2 = new Discount("VOUCHER20","Voucher 20",20, false);
+
+        DiscountService discountService = new DiscountService();
+
+        discountService.createDiscount(discount1);
+        discountService.createDiscount(discount2);
+
+        System.out.println(discountService.calculateFinalAmount(discount1.getId(), 100));
+        System.out.println(discountService.calculateFinalAmount(discount2.getId(), 100));
     }
 }
