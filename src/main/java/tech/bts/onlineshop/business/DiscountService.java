@@ -20,11 +20,14 @@ public class DiscountService {
     public double calculateFinalAmount(String id, double originalAmount) {
 
         Discount discount = discountMap.get(id);
-        boolean isPercentage = discount.isPercentage();
 
-        if (discount != null) {
-            if (isPercentage) { return originalAmount * (1 - discount.getAmount()/100);
-            } else { return originalAmount - discount.getAmount();}
-        } else { return originalAmount;}
+        if (discount == null) {
+            return originalAmount;
+        } else {
+            if (discount.isPercentage()) {
+                return originalAmount * (1 - discount.getAmount()/100);
+            } else {
+                return originalAmount - discount.getAmount();}
+        }
     }
 }

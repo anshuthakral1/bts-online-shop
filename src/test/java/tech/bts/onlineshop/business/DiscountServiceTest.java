@@ -11,6 +11,7 @@ public class DiscountServiceTest {
 
         Discount discount1 = new Discount("SUMMERSALES","Summer Sales",25, true);
         Discount discount2 = new Discount("VOUCHER20","Voucher 20",20, false);
+        Discount discount3 = new Discount("VOUCHER50","Voucher 50",50, false);
 
         DiscountService discountService = new DiscountService();
 
@@ -19,5 +20,6 @@ public class DiscountServiceTest {
 
         Assert.assertEquals(75, discountService.calculateFinalAmount(discount1.getId(), 100),0.0);
         Assert.assertEquals(80, discountService.calculateFinalAmount(discount2.getId(), 100),0.0);
+        Assert.assertEquals(100, discountService.calculateFinalAmount(discount3.getId(), 100),0.0);
     }
 }
