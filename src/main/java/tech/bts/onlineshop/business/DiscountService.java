@@ -23,11 +23,10 @@ public class DiscountService {
 
         if (discount == null) {
             return originalAmount;
+        } else if (discount.isPercentage()) {
+            return originalAmount * (1 - discount.getAmount()/100);
         } else {
-            if (discount.isPercentage()) {
-                return originalAmount * (1 - discount.getAmount()/100);
-            } else {
-                return originalAmount - discount.getAmount();}
+            return originalAmount - discount.getAmount();
         }
     }
 }
