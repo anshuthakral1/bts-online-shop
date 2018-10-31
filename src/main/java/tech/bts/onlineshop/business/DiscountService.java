@@ -26,7 +26,7 @@ public class DiscountService {
         } else if (discount.isPercentage()) {
             return originalAmount * (1 - discount.getAmount()/100);
         } else {
-            return originalAmount - discount.getAmount();
+            return Math.max(originalAmount - discount.getAmount(), 0);
         }
     }
 }

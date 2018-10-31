@@ -3,7 +3,9 @@ package tech.bts.onlineshop.business;
 import org.junit.Assert;
 import org.junit.Test;
 import tech.bts.onlineshop.data.ProductDatabase;
+import tech.bts.onlineshop.model.CartItem;
 import tech.bts.onlineshop.model.Product;
+import tech.bts.onlineshop.model.ShoppingCart;
 
 public class ProductServiceTest {
 
@@ -60,4 +62,31 @@ public class ProductServiceTest {
         Assert.assertEquals(100, productService.getAvailableQuantity(pixelId, 200));
     }
 
+    @Test
+    public void purchase_reduces_product_stock() {
+
+        //1 - setup the necessary objects
+
+        ProductService productService = new ProductService(new ProductDatabase());
+
+        long pixelId = productService.createProductAndAddStock(new Product("pixel", "Google", 800),100);
+        long iPhoneId = productService.createProductAndAddStock(new Product("iPhone", "Apple", 1000),200);
+        long iPadId = productService.createProductAndAddStock(new Product("iPad", "Apple", 1200),50);
+
+        productService.addProductStock(pixelId, 100);
+
+        ShoppingCart cart = new ShoppingCart();
+        cart.add(new CartItem(pixelId,30));
+        cart.add(new CartItem(iPhoneId,10));
+
+        //2 - calling the method(s) we are testing
+
+        productService.purchase(cart);
+
+        //3 - check expected results
+
+        Assert.assertEquals(170, productService.getProductById(pixelId).getQuantity());
+        Assert.assertEquals(190, productService.getProductById(iPhoneId).getQuantity());
+        Assert.assertEquals(50, productService.getProductById(iPadId).getQuantity());
+    }
 }
