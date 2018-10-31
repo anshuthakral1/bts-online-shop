@@ -89,4 +89,17 @@ public class ProductServiceTest {
         Assert.assertEquals(190, productService.getProductById(iPhoneId).getQuantity());
         Assert.assertEquals(50, productService.getProductById(iPadId).getQuantity());
     }
+
+    @Test
+    public void purchase_more_than_product_stock() {
+        ProductService productService = new ProductService(new ProductDatabase());
+
+        long pixelId = productService.createProductAndAddStock(new Product("pixel", "Google", 800),100);
+        ShoppingCart cart = new ShoppingCart();
+        cart.add(new CartItem(pixelId,200));
+
+        productService.purchase(cart);
+
+        Assert.assertEquals(0, productService.getProductById(pixelId).getQuantity());
+    }
 }
