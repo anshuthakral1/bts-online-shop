@@ -64,4 +64,19 @@ public class ProductService {
             product.setQuantity(Math.max(remainingQuantity,0));
         }
     }
+
+    public ShoppingCart purchaseAndReturnCart(ShoppingCart cart) {
+
+        ShoppingCart result = new ShoppingCart();
+
+        for (CartItem item : cart.getItems()) {
+            Product product = productDatabase.get(item.getProductId());
+            int actualQuantity = Math.min(product.getQuantity(), item.getQuantity());
+            int remainingQuantity = product.getQuantity() - actualQuantity;
+            product.setQuantity(remainingQuantity);
+            result.add(new CartItem(item.getProductId(), actualQuantity));
+        }
+
+        return result;
+    }
 }
